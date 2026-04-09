@@ -26,7 +26,13 @@ SECRET_KEY = 'django-insecure-k#on&ta21&spp-%iyl=b^a$-ybwv8#7g7k^b&pgy3=8bo^=$#o
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['*']
+import os
+# Allow all for dev, but prefer explicit codespace and localhost
+codespace_name = os.environ.get('CODESPACE_NAME')
+allowed_hosts = ['localhost', '127.0.0.1']
+if codespace_name:
+    allowed_hosts.append(f"{codespace_name}-8000.app.github.dev")
+ALLOWED_HOSTS = allowed_hosts
 
 
 # Application definition
@@ -40,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djongo',
-    'django_cors_headers',
+    'corsheaders',
     'octofit_tracker',
 ]
 
